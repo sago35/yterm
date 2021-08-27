@@ -16,7 +16,7 @@ import (
 
 func main() {
 	port := flag.String("port", "", "serial port")
-	disableCtrlC := flag.Bool("--disable-ctrl-c", false, "disable ctrl-c")
+	disableCtrlC := flag.Bool("disable-ctrl-c", false, "disable ctrl-c")
 	flag.Parse()
 
 	if *port == "" {
