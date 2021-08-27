@@ -31,7 +31,9 @@ func main() {
 }
 
 func run(p string, disableCtrlC bool) error {
-	fmt.Printf("`Ctrl-x q` to exit\n")
+	if disableCtrlC {
+		fmt.Printf("`Ctrl-x q` to exit\n")
+	}
 
 	var mu sync.Mutex
 
