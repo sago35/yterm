@@ -26,6 +26,7 @@ import (
 
 func main() {
 	port := flag.String("port", "", "serial port")
+	baud := flag.Int("baud", 115200, "baudrate")
 	disableCtrlC := flag.Bool("disable-ctrl-c", false, "disable ctrl-c")
 	target := flag.String("target", "", "target")
 	flag.Parse()
@@ -42,7 +43,7 @@ func main() {
 			log.Fatal(err)
 		}
 	default:
-		err := run(*port, *target, *disableCtrlC)
+		err := run(*port, *target, *baud, *disableCtrlC)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -111,7 +112,7 @@ func getTargetSpecs() (map[string]compileopts.TargetSpec, error) {
 	return maps, nil
 }
 
-func run(p, target string, disableCtrlC bool) error {
+func run(p, target string, baud int, disableCtrlC bool) error {
 	maps, err := getTargetSpecs()
 	if err != nil {
 		return err
@@ -134,14 +135,14 @@ func run(p, target string, disableCtrlC bool) error {
 
 	var mu sync.Mutex
 
-	port, err := serial.Open(p2, &serial.Mode{})
+	port, err := serial.Open(p2, &serial.Mode{BaudRate: baud})
 
 	for i := 0; i < 50; i++ {
 		if err == nil {
 			break
 		}
 		time.Sleep(100 * time.Millisecond)
-		port, err = serial.Open(p, &serial.Mode{})
+		port, err = serial.Open(p, &serial.Mode{BaudRate: baud})
 	}
 
 	if err != nil {
@@ -180,7 +181,7 @@ func run(p, target string, disableCtrlC bool) error {
 				portHasError = true
 				mu.Unlock()
 				for err != nil {
-					port, err = serial.Open(p, &serial.Mode{})
+					port, err = serial.Open(p, &serial.Mode{BaudRate: baud})
 					time.Sleep(100 * time.Millisecond)
 				}
 				mu.Lock()
