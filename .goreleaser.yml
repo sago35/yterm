@@ -12,7 +12,7 @@ builds:
     goos:
       - linux
       - windows
-      - darwin
+        #- darwin # https://github.com/bugst/go-serial/issues/114
 archives:
   - replacements:
       darwin: Darwin
