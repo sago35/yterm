@@ -8,9 +8,11 @@
 $ go install github.com/sago35/yterm@latest
 ```
 
-Alternatively, you can download the binary from the following URL.
+Alternatively, you can download the binary from the following URL.  
+However, the macOS version of the binary is not available at this time.  
+(see: https://github.com/bugst/go-serial/issues/114)  
 
-* 
+* https://github.com/sago35/yterm/releases
 
 ## Usage
 
