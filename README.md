@@ -8,6 +8,10 @@
 $ go install github.com/sago35/yterm@latest
 ```
 
+Alternatively, you can download the binary from the following URL.
+
+* 
+
 ## Usage
 
 ```
@@ -24,3 +28,15 @@ $ yterm list
 /dev/ttyACM0 2886 802f xiao
 /dev/ttyACM1 2886 802d wioterminal
 ```
+
+## Notice
+
+This project uses [goreleaser](https://goreleaser.com/) for release
+
+## LICENSE
+
+MIT
+
+## Author
+
+sago35 - <sago35@gmail.com>
