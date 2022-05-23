@@ -17,7 +17,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tinygo-org/tinygo/compileopts"
 	"go.bug.st/serial"
 	"go.bug.st/serial/enumerator"
 	"golang.org/x/crypto/ssh/terminal"
@@ -82,7 +81,7 @@ func showPorts() error {
 	return nil
 }
 
-func getTargetSpecs() (map[string]compileopts.TargetSpec, error) {
+func getTargetSpecs() (map[string]TargetSpec, error) {
 	out, err := exec.Command(`tinygo`, `env`, `TINYGOROOT`).CombinedOutput()
 	if err != nil {
 		return nil, err
@@ -94,9 +93,9 @@ func getTargetSpecs() (map[string]compileopts.TargetSpec, error) {
 		return nil, err
 	}
 
-	maps := map[string]compileopts.TargetSpec{}
+	maps := map[string]TargetSpec{}
 	for _, match := range matches {
-		option := compileopts.TargetSpec{}
+		option := TargetSpec{}
 		b, err := ioutil.ReadFile(match)
 		if err != nil {
 			return nil, err
@@ -345,4 +344,8 @@ func getDefaultPort(portFlag string, usbInterfaces []string) (port string, err e
 	}
 
 	return "", errors.New("port you specified '" + strings.Join(portCandidates, ",") + "' does not exist, available ports are " + strings.Join(ports, ", "))
+}
+
+type TargetSpec struct {
+	SerialPort []string `json:"serial-port"` // serial port IDs in the form "acm:vid:pid" or "usb:vid:pid"
 }
